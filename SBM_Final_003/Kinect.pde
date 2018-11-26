@@ -21,8 +21,10 @@ void setupKinect() {
   kinect2.initDevice();
 
   depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
-
+  image(depthImg, 0, 0);
   opencv = new OpenCV(this, depthImg);
+  print("depthImg: ");
+  println(depthImg);
 
   int sliderW = 100;
   int sliderH = 20;
