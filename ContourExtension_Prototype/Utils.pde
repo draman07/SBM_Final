@@ -10,14 +10,20 @@ ArrayList<PVector> updateBiggestContourPoints(PImage img) {
 
   opencv.erode();
   opencv.dilate();
-  ArrayList<Contour> contours = opencv.findContours();
 
-  Contour biggest = contours.get(0);
-  for (Contour c : contours) {
-    if (c.area()>biggest.area())
-      biggest = c;
+  ArrayList<Contour> contours = opencv.findContours();
+  if (contours.size()>0) {
+    Contour biggest = contours.get(0);
+    for (Contour c : contours) {
+      if (c.area()>biggest.area())
+        biggest = c;
+    }
+    return biggest.getPoints();
   }
-  return biggest.getPoints();
+  return null;
+
+  //}
+  //return new ArrayList<PVector>();
 }
 
 PVector[] simplifyArrayListTo(ArrayList<PVector> ori, int target) {
@@ -45,6 +51,6 @@ PVector calculateNormal(PVector p, PVector pLast, PVector pNext) {
   if (lastToP.heading() < pToNext.heading()) {
     normal.mult(-1);
   }
-  
+
   return normal;
 }
