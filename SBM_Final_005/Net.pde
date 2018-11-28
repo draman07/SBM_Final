@@ -8,7 +8,7 @@ class Net {
 
   PVector[] innerVertices;
   PVector[] netVertices;
-
+  
   //float normalOffset, centerOffset;
 
   Net(int num, Net n, KinectTracker kt) {
@@ -36,9 +36,9 @@ class Net {
 
   void display() {
     for (int i = 0; i < num; i++) {
-      stroke(255);
-      strokeWeight(1);
-      line(innerVertices[i].x, innerVertices[i].y, netVertices[i].x, netVertices[i].y);
+      netsGraphics.stroke(255);
+      netsGraphics.strokeWeight(1);
+      netsGraphics.line(innerVertices[i].x, innerVertices[i].y, netVertices[i].x, netVertices[i].y);
       //stroke(255, 0, 0);
       //strokeWeight(2);
       //line(netVertices[i].x, netVertices[i].y, netVertices[(i+1+num)%num].x, netVertices[(i+1+num)%num].y);

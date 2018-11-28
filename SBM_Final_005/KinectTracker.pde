@@ -19,7 +19,7 @@ class KinectTracker {
     kinect2 = new Kinect2(pa);
     kinect2.initDepth();
     kinect2.initDevice();
-    depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, RGB);
+    depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
     opencv = new OpenCV(pa, depthImg);
 
     verticesNum = num;
@@ -43,7 +43,7 @@ class KinectTracker {
       int depth = rawDepth[i];
       if (depth >= thresholdMin && depth <= thresholdMax && depth != 0) {
         //float w = map(depth, thresholdMin, thresholdMax, 255, 100);
-        depthImg.pixels[i] = color(255, 0);
+        depthImg.pixels[i] = color(255, 255);
       } else {
         depthImg.pixels[i] = color(0, 0);
       }
