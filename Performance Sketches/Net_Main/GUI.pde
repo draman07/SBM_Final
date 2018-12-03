@@ -2,6 +2,12 @@ ControlP5 cp5;
 
 boolean guiToggle;
 
+int thresholdMin = 0;
+int thresholdMax = 4499;
+
+int numOfNetsDisplay = 1;
+int numOfLinesDisplay = 0;
+
 float normalOffset = 0, centerOffset = 5;
 
 
