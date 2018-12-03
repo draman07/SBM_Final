@@ -11,7 +11,7 @@ class Vertex{
   }
   
   void update(){
-    pos.lerp(targetPos, 0.2);
+    pos.lerp(targetPos, lerpFactor);
   }
   
   void setTargetPos(PVector t){

@@ -1,6 +1,8 @@
 import org.openkinect.processing.*;
 import gab.opencv.*;
 import controlP5.*;
+import oscP5.*;
+import netP5.*;
 
 KinectTracker tracker;
 PGraphics netsGraphics;
@@ -17,6 +19,8 @@ int numOfLinesDisplay = 0;
 int thresholdMin = 0;
 int thresholdMax = 4499;
 
+OscP5 oscP5;
+
 
 
 void setup() {
@@ -25,6 +29,9 @@ void setup() {
   netsGraphics = createGraphics(512, 414, P2D);
   depthImg = createImage(512, 414, ARGB);
   setupGui();
+
+  oscP5 = new OscP5(this, 12000);
+  
   nets = new Net[numOfNets];
   for (int i = 0; i < numOfNets; i++) {
     if (i == 0) nets[i] = new Net(numOfPoints, null, tracker);
@@ -35,7 +42,7 @@ void setup() {
 
 void draw() {
   background(0, 255);
-  
+
   tracker.update(); 
   depthImg = tracker.getDepthImage();
 
@@ -43,8 +50,8 @@ void draw() {
   netsGraphics.clear();
   for (int i = 0; i < numOfNets; i++) {
     nets[i].update();
-    if (i < numOfLinesDisplay && displayLines)nets[i].displayLines();
-    else if(i == numOfNetsDisplay && displayNet)nets[i].displayNet();
+    if (i < numOfLinesDisplay)nets[i].displayLines();
+    else if (i == numOfNetsDisplay)nets[i].displayNet();
   }
   netsGraphics.endDraw();
 
@@ -54,7 +61,7 @@ void draw() {
     if (depthImg.pixels[i] == color(255, 255) 
       && brightness(netsGraphics.pixels[i]) > 5) {
       netsGraphics.pixels[i] = color(0);
-      }
+    }
   }
   netsGraphics.updatePixels();
 
@@ -72,12 +79,11 @@ void draw() {
 
   pushMatrix();
   scale(2);
-  
-  image(depthImg, 0, 0);
+  if (random(flashFactor)<0.5)image(depthImg, 0, 0);
   image(netsGraphics, 0, 0);
   popMatrix();
 
-
+  //update();
 
   if (guiToggle)drawGui();
 }

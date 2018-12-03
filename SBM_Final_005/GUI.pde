@@ -4,6 +4,8 @@ boolean guiToggle;
 
 int normalOffset, centerOffset;
 
+boolean displayNet, displayLines;
+
 void setupGui() {
   guiToggle = true;
 
@@ -14,6 +16,15 @@ void setupGui() {
   int spacing = 20;
 
   cp5 = new ControlP5( this );
+
+  cp5.addToggle("displayLines")
+    .setPosition(10, startY+spacing*1)
+    .setSize(sliderW, sliderH)
+    .setValue(false);
+  cp5.addToggle("displayNet")
+    .setPosition(10, startY+spacing*3)
+    .setSize(sliderW, sliderH)
+    .setValue(false);
 
   cp5.addSlider("thresholdMin")
     .setPosition(10, startY+spacing*11)
@@ -29,20 +40,26 @@ void setupGui() {
     .setValue(4499)
     ; 
 
-  cp5.addSlider("numOfNetsDisplay")
+  cp5.addSlider("numOfLinesDisplay")
     .setPosition(10, startY+spacing*14)
+    .setSize(sliderW, sliderH)
+    .setRange(0, 10)
+    .setValue(0)
+    ;  
+  cp5.addSlider("numOfNetsDisplay")
+    .setPosition(10, startY+spacing*15)
     .setSize(sliderW, sliderH)
     .setRange(1, 10)
     .setValue(1)
     ;
   cp5.addSlider("normalOffset")
-    .setPosition(10, startY+spacing*15)
+    .setPosition(10, startY+spacing*17)
     .setSize(sliderW, sliderH)
     .setRange(-50, 50)
     .setValue(0)
     ;
   cp5.addSlider("centerOffset")
-    .setPosition(10, startY+spacing*16)
+    .setPosition(10, startY+spacing*18)
     .setSize(sliderW, sliderH)
     .setRange(-50, 50)
     .setValue(0)
