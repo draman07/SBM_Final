@@ -6,8 +6,7 @@ import netP5.*;
 
 KinectTracker tracker;
 PGraphics netsGraphics;
-PGraphics humanGraphics;
-PImage humanImg;
+PImage depthImg;
 
 Net[] nets;
 
@@ -20,8 +19,6 @@ int numOfLinesDisplay = 0;
 int thresholdMin = 0;
 int thresholdMax = 4499;
 
-float scaleFactor;
-
 OscP5 oscP5;
 
 
@@ -29,15 +26,12 @@ OscP5 oscP5;
 void setup() {
   size(1024, 828, P2D);
   tracker = new KinectTracker(this, numOfPoints);
-  netsGraphics = createGraphics(width, height, P2D);
-  humanGraphics = createGraphics(width, height, P2D);
-  humanImg = createImage(512, 414, ARGB);
+  netsGraphics = createGraphics(512, 414, P2D);
+  depthImg = createImage(512, 414, ARGB);
   setupGui();
 
-  scaleFactor = width/512;
-
   oscP5 = new OscP5(this, 12000);
-
+  
   nets = new Net[numOfNets];
   for (int i = 0; i < numOfNets; i++) {
     if (i == 0) nets[i] = new Net(numOfPoints, null, tracker);
@@ -50,11 +44,10 @@ void draw() {
   background(0, 255);
 
   tracker.update(); 
-  humanImg = tracker.getBlurImage();
+  depthImg = tracker.getDepthImage();
 
   netsGraphics.beginDraw();
   netsGraphics.clear();
-  netsGraphics.scale(scaleFactor);
   for (int i = 0; i < numOfNets; i++) {
     nets[i].update();
     if (i < numOfLinesDisplay)nets[i].displayLines();
@@ -62,23 +55,31 @@ void draw() {
   }
   netsGraphics.endDraw();
 
-  humanGraphics.beginDraw();
-  humanGraphics.clear();
-  humanGraphics.image(humanImg, 0,0,width,height);
-
-  humanGraphics.loadPixels();
+  depthImg.loadPixels();
   netsGraphics.loadPixels();
   for (int i = 0; i < 512 * 414; i++) {
-    if (humanGraphics.pixels[i] == color(255, 255) 
+    if (depthImg.pixels[i] == color(255, 255) 
       && brightness(netsGraphics.pixels[i]) > 5) {
       netsGraphics.pixels[i] = color(0);
     }
   }
   netsGraphics.updatePixels();
 
+  //netsGraphics.beginDraw();
+  //netsGraphics.beginShape();
+  //netsGraphics.fill(255);
+  //netsGraphics.noStroke();
+  //PVector [] ps = tracker.getContourVertices();
+  //for (int i = 0; i < numOfPoints; i++) {
+  //  netsGraphics.curveVertex(ps[i].x, ps[i].y);
+  //}
+  //netsGraphics.endShape(CLOSE);
+  //netsGraphics.endDraw();
+
 
   pushMatrix();
-  if (random(flashFactor)<0.5)image(humanGraphics, 0, 0);
+  scale(2);
+  if (random(flashFactor)<0.5)image(depthImg, 0, 0);
   image(netsGraphics, 0, 0);
   popMatrix();
 

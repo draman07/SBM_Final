@@ -74,7 +74,6 @@ void draw() {
 
 void keyPressed() {
 
-
   if (key == '0') {
     println('0');
     state = 0;

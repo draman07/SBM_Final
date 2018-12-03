@@ -9,7 +9,7 @@ class KinectTracker {
 
   int verticesNum = 200;
 
-  PImage depthImg, blurImg;
+  PImage depthImg;
 
 
   KinectTracker(PApplet pa, int num) {
@@ -17,7 +17,6 @@ class KinectTracker {
     kinect2.initDepth();
     kinect2.initDevice();
     depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
-    blurImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
     opencv = new OpenCV(pa, depthImg);
 
     verticesNum = num;
@@ -40,13 +39,14 @@ class KinectTracker {
     for (int i=0; i < rawDepth.length; i++) {
       int depth = rawDepth[i];
       if (depth >= thresholdMin && depth <= thresholdMax && depth != 0) {
+        //float w = map(depth, thresholdMin, thresholdMax, 255, 100);
         depthImg.pixels[i] = color(255, 255);
       } else {
         depthImg.pixels[i] = color(0, 0);
       }
     }
     depthImg.updatePixels();
-    //image(depthImg,512,0);
+     //image(depthImg,512,0);
   }
 
   void updateOpenCV() {
@@ -57,9 +57,6 @@ class KinectTracker {
     opencv.dilate();
     opencv.dilate();
     opencv.erode();
-    opencv.blur(3);
-    blurImg = opencv.getSnapshot();
-    
   }
 
   void updateBiggestContour() {
@@ -83,19 +80,21 @@ class KinectTracker {
       }
     }
   }
-
-  void setThresholds(int min, int max) {
+  
+  void setThresholds(int min, int max){
     thresholdMin = min;
     thresholdMax = max;
   }
-
-  PImage getDepthImage() {
+  
+  PImage getDepthImage(){
     return depthImg;
   }
-  PVector[] getContourVertices() {
+  PVector[] getContourVertices(){
     return contourVertices;
   }
-  PImage getBlurImage() {
-    return blurImg;
+  PImage getOpenCVImage(){
+    return opencv.getSnapshot();
   }
+  
+  
 }
