@@ -36,19 +36,19 @@ class Net {
 
   void displayLines() {
     for (int i = 0; i < num; i++) {
-      netsGraphics.stroke(255);
+      netsGraphics.stroke(strokeColor);
       netsGraphics.strokeWeight(1);
-      netsGraphics.line(innerVertices[i].x, innerVertices[i].y, netVertices[i].x, netVertices[i].y);
+      netsGraphics.line(innerVertices[i].x*scaleFactor, innerVertices[i].y*scaleFactor, netVertices[i].x*scaleFactor, netVertices[i].y*scaleFactor);
      }
  
   }
   void displayNet() {
-    netsGraphics.stroke(255);
+    netsGraphics.stroke(strokeColor);
     netsGraphics.strokeWeight(1);
     netsGraphics.noFill();
     netsGraphics.beginShape();
     for (int i = 0; i < num; i++) {
-      netsGraphics.curveVertex(innerVertices[i].x, innerVertices[i].y);
+      netsGraphics.curveVertex(innerVertices[i].x*scaleFactor, innerVertices[i].y*scaleFactor);
     }
     netsGraphics.endShape(CLOSE);
   }

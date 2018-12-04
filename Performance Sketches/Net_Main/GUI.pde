@@ -10,9 +10,10 @@ int numOfLinesDisplay = 0;
 
 float normalOffset = 0, centerOffset = 5;
 
+int humanOffsetX, humanOffsetY;
+
 
 float lerpFactor = 0.2;
-
 float flashFactor = 0.45;
 
 void setupGui() {
@@ -48,6 +49,20 @@ void setupGui() {
     .setRange(1, 4499)
     .setValue(4499)
     ; 
+  cp5.addSlider("humanOffsetX")
+    .setPosition(10, startY+spacing*15)
+    .setSize(sliderW, sliderH)
+    .setRange(-width, width)
+    .setValue((width-1024)/2)
+    ; 
+
+  cp5.addSlider("humanOffsetY")
+    .setPosition(10, startY+spacing*16)
+    .setSize(sliderW, sliderH)
+    .setRange(-height, height)
+    .setValue((height-828)/2)
+    ; 
+
 
   //cp5.addSlider("numOfLinesDisplay")
   //  .setPosition(10, startY+spacing*14)

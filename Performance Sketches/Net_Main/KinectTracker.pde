@@ -57,7 +57,7 @@ class KinectTracker {
     opencv.dilate();
     opencv.dilate();
     opencv.erode();
-    opencv.blur(3);
+    opencv.blur(10);
     blurImg = opencv.getSnapshot();
     
   }
