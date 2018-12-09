@@ -1,8 +1,14 @@
 import oscP5.*;
 import netP5.*;
+import processing.sound.*;
 
 OscP5 oscP5;
 NetAddress dest;
+
+FFT fft;
+AudioIn in;
+int bands = 512;
+float[] spectrum = new float[bands];
 
 int state;
 boolean displayNet, displayLines;
@@ -14,13 +20,25 @@ int strokeColor;
 void setup() {
   size(200, 200);
   oscP5 = new OscP5(this, 1234);
-  dest = new NetAddress("127.0.0.1", 12000); //Mars Loc
+  dest = new NetAddress("10.225.80.185", 12000); //Mars Loc
+
+  fft = new FFT(this, bands);
+  in = new AudioIn(this, 0);
+
+  // start the Audio Input
+  in.start();
+
+  // patch the AudioIn
+  fft.input(in);
 }
 
 void draw() {
   background(0);
   textSize(50);
-  text(state,width/2,height/2);
+  text(state, width/2, height/2);
+  
+  processAudio();
+  
   if (state == -1) {
     numOfNetsDisplay = lerp(numOfNetsDisplay, 0, 0.1);
     numOfLinesDisplay =  lerp(numOfLinesDisplay, 0, 0.1);
@@ -31,7 +49,8 @@ void draw() {
     strokeColor = int(lerp(strokeColor, color(255), 0.2));
   } else if (state == 0) {
     numOfNetsDisplay =  lerp(numOfNetsDisplay, 0, 0.1);
-    numOfLinesDisplay =  lerp(numOfLinesDisplay, 4, 0.1);;
+    numOfLinesDisplay =  lerp(numOfLinesDisplay, 4, 0.1);
+    ;
     normalOffset = lerp(normalOffset, -10, .1); 
     centerOffset = lerp(centerOffset, -10, .1); // -infinity
     lerpFactor = .3;
@@ -82,11 +101,13 @@ void draw() {
   OscMessage msg = new OscMessage("/state");
   msg.add( numOfNetsDisplay );
   msg.add( numOfLinesDisplay );
-  msg.add( normalOffset );
-  msg.add( centerOffset );
+
+  msg.add( 1*normalOffset * (1 + 10*audioOffset));
+  msg.add( 1*centerOffset + (1 + 20*audioOffset));
   msg.add( lerpFactor );
   msg.add( flashFactor );
   msg.add( strokeColor );
+  
 
   oscP5.send(msg, dest);
 }
