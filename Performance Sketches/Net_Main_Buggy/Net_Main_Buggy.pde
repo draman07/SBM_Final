@@ -27,11 +27,11 @@ int strokeColor = color(255);
 OscP5 oscP5;
 
 void setup() {
-  size(1600, 900, P2D);
-  canvas = createGraphics(1600, 900, P2D);
+  size(1024, 828, P2D);
+  canvas = createGraphics(1024, 828, P2D);
   tracker = new KinectTracker(this, numOfPoints);
   netsGraphics = createGraphics(width, height, P2D);
-  humanGraphics = createGraphics(1600, 900, P2D);
+  humanGraphics = createGraphics(1024, 828, P2D);
   humanImg = createImage(512, 414, ARGB);
 
   scaleFactor = 2;
@@ -61,7 +61,6 @@ void draw() {
   //drawing nets on the nets pgraphics
   netsGraphics.beginDraw();
   netsGraphics.clear();
-  netsGraphics.translate(humanOffsetX,humanOffsetY);
   //netsGraphics.scale(2);
   for (int i = 0; i < numOfNets; i++) {
     nets[i].update();

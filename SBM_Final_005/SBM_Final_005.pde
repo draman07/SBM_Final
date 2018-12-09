@@ -44,7 +44,7 @@ void draw() {
   for (int i = 0; i < numOfNets; i++) {
     nets[i].update();
     if (i < numOfLinesDisplay && displayLines)nets[i].displayLines();
-    else if(i == numOfNetsDisplay && displayNet)nets[i].displayNet();
+    else if(i < numOfNetsDisplay && displayNet)nets[i].displayNet();
   }
   netsGraphics.endDraw();
 

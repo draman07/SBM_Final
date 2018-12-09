@@ -39,7 +39,8 @@ class Net {
       netsGraphics.stroke(strokeColor);
       netsGraphics.strokeWeight(1);
       netsGraphics.line(innerVertices[i].x*scaleFactor, innerVertices[i].y*scaleFactor, netVertices[i].x*scaleFactor, netVertices[i].y*scaleFactor);
-    }
+     }
+ 
   }
   void displayNet() {
     netsGraphics.stroke(strokeColor);
@@ -60,7 +61,6 @@ class Net {
 
   void updateTargetVertices() {
     PVector average = averagePointInArray(innerVertices);
-    average.y+=centerOffsetY;
     //average.add(0, -100);
     for (int i = 0; i < num; i++) {
       PVector p = innerVertices[i];
