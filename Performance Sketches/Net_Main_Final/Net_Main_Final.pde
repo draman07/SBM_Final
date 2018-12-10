@@ -51,7 +51,7 @@ void setup() {
 void draw() {
   background(0, 255);
 
-  println(frameRate);
+  //println(frameRate);
   //update kinect tracker
   tracker.update(); 
   humanImg = tracker.getBlurImage();

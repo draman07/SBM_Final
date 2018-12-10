@@ -76,13 +76,17 @@ class KinectTracker {
     }
   }
 
-  void updateContourPoints() {
-    if (biggestContour != null) {
+  void updateContourPoints() {println(biggestContour.area());
+    if (biggestContour != null && biggestContour.area()>6000) {
       //jump sampling the contour points to the target number
       ArrayList<PVector> ori = biggestContour.getPoints();
       int oriSize = ori.size();
       for (int i = 0; i < verticesNum; i++) {
         contourVertices[i] = (ori.get(int(map(i, 0, verticesNum-1, 0, oriSize-1))));
+      }
+    } else {
+      for (int i = 0; i < verticesNum; i++) {
+        contourVertices[i].set(256, 414);
       }
     }
   }

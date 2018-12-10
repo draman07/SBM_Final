@@ -7,10 +7,13 @@ NetAddress dest;
 
 FFT fft;
 AudioIn in;
+SoundFile file;
 int bands = 512;
 float[] spectrum = new float[bands];
+boolean stopPlaying = false;
+float amp = 0.5;
 
-int state;
+int state = -1;
 boolean displayNet, displayLines;
 float numOfNetsDisplay, numOfLinesDisplay;
 float normalOffset = 0, centerOffset = -20;
@@ -24,7 +27,8 @@ void setup() {
 
   fft = new FFT(this, bands);
   in = new AudioIn(this, 0);
-
+  file = new SoundFile(this, "music.mp3");
+  file.amp(amp);
   // start the Audio Input
   in.start();
 
@@ -36,21 +40,22 @@ void draw() {
   background(0);
   textSize(50);
   text(state, width/2, height/2);
-  
+
+
   processAudio();
-  
+
   if (state == -1) {
-    numOfNetsDisplay = lerp(numOfNetsDisplay, 0, 0.1);
-    numOfLinesDisplay =  lerp(numOfLinesDisplay, 0, 0.1);
+    numOfNetsDisplay = lerp(numOfNetsDisplay, -1, 0.1);
+    numOfLinesDisplay =  lerp(numOfLinesDisplay, -1, 0.1);
     normalOffset = lerp(normalOffset, 0, .1); 
     centerOffset = lerp(centerOffset, -10, .1); // -infinity
     lerpFactor = .3;
     flashFactor = 0.45;
-    strokeColor = int(lerp(strokeColor, color(255), 0.2));
+    strokeColor = int(lerp(strokeColor, color(255, 0), 0.2));
   } else if (state == 0) {
     numOfNetsDisplay =  lerp(numOfNetsDisplay, 0, 0.1);
     numOfLinesDisplay =  lerp(numOfLinesDisplay, 4, 0.1);
-    ;
+    
     normalOffset = lerp(normalOffset, -10, .1); 
     centerOffset = lerp(centerOffset, -10, .1); // -infinity
     lerpFactor = .3;
@@ -107,9 +112,18 @@ void draw() {
   msg.add( lerpFactor );
   msg.add( flashFactor );
   msg.add( strokeColor );
-  
+
 
   oscP5.send(msg, dest);
+
+  if (stopPlaying) {
+    amp = lerp(amp, 0, 0.1);
+    file.amp(amp);
+    if (amp == 0) {
+      stopPlaying = false;
+      file.stop();
+    }
+  }
 }
 
 void keyPressed() {
@@ -135,7 +149,9 @@ void keyPressed() {
   } else if (key == '5') {
     println('5');
     state = 5;
-  } else {
-    //
+  } else if (key == 'p') {
+    file.play();
+  } else if (key == 'n') {
+    stopPlaying = true;
   }
 }

@@ -9,5 +9,5 @@ void processAudio(){
   }
   //audioOffset /= bands;
   audioOffset = lerp(audioOffset,audioOffsetTemp,0.4);
-  println(audioOffset);
+  //println(audioOffset);
 }
