@@ -19,6 +19,7 @@ float numOfNetsDisplay, numOfLinesDisplay;
 float normalOffset = 0, centerOffset = -20;
 float lerpFactor, flashFactor;
 int strokeColor;
+int ended = 0;
 
 void setup() {
   size(200, 200);
@@ -113,6 +114,7 @@ void draw() {
   msg.add( lerpFactor );
   msg.add( flashFactor );
   msg.add( strokeColor );
+  msg.add( ended);
 
 
   oscP5.send(msg, dest);
@@ -154,5 +156,7 @@ void keyPressed() {
     file.play();
   } else if (key == 'n') {
     stopPlaying = true;
+  }  else if(key == 'e'){
+    ended = 1;
   }
 }

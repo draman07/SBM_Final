@@ -91,7 +91,7 @@ void draw() {
 
   canvas.beginDraw();
   canvas.background(0);
-  canvas.scale(2);
+  if(!playVideo)canvas.scale(2);
   if (random(flashFactor)<0.5)canvas.image(humanImg, 0, 0);
   canvas.image(netsGraphics, 0, 0);
   if (mapping)canvas.background(255);
@@ -99,7 +99,7 @@ void draw() {
   canvas.endDraw();
 
   image(canvas, 0, 0);
-  image(myMovie, 0, 0);
+  //image(myMovie, 0, 0);
   server.sendImage(canvas);
 
   if (ended == 1 && !playVideo) {
@@ -114,6 +114,8 @@ boolean mapping = false;
 void keyPressed() {
   if (key == ' ')guiToggle =!guiToggle;
   if (key == 'm') mapping = !mapping;
+   if (key == 'p') ended = 1;
+  
 }
 
 void movieEvent(Movie m) {
