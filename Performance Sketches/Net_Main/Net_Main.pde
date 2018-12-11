@@ -27,11 +27,11 @@ int strokeColor = color(255);
 OscP5 oscP5;
 
 void setup() {
-  size(1600, 900, P2D);
-  canvas = createGraphics(1600, 900, P2D);
+  size(1600, 1200, P2D);
+  canvas = createGraphics(width, height, P2D);
   tracker = new KinectTracker(this, numOfPoints);
   netsGraphics = createGraphics(width, height, P2D);
-  humanGraphics = createGraphics(1600, 900, P2D);
+  humanGraphics = createGraphics(width, height, P2D);
   humanImg = createImage(512, 414, ARGB);
 
   scaleFactor = 2;

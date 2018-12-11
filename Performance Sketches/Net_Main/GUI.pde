@@ -69,38 +69,43 @@ void setupGui() {
     ; 
 
 
-  //cp5.addSlider("numOfLinesDisplay")
-  //  .setPosition(10, startY+spacing*14)
-  //  .setSize(sliderW, sliderH)
-  //  .setRange(0, 10)
-  //  .setValue(0)
-  //  ;  
-  //cp5.addSlider("numOfNetsDisplay")
-  //  .setPosition(10, startY+spacing*15)
-  //  .setSize(sliderW, sliderH)
-  //  .setRange(1, 10)
-  //  .setValue(1)
-  //  ;
-  //cp5.addSlider("normalOffset")
-  //  .setPosition(10, startY+spacing*17)
-  //  .setSize(sliderW, sliderH)
-  //  .setRange(-50, 50)
-  //  .setValue(0)
-  //  ;
-  //cp5.addSlider("centerOffset")
-  //  .setPosition(10, startY+spacing*18)
-  //  .setSize(sliderW, sliderH)
-  //  .setRange(-50, 50)
-  //  .setValue(0)
-  //  ;
+  cp5.addSlider("numOfLinesDisplay")
+    .setPosition(10, startY+spacing*19)
+    .setSize(sliderW, sliderH)
+    .setRange(0, 10)
+    .setValue(0)
+    ;  
+  cp5.addSlider("numOfNetsDisplay")
+    .setPosition(10, startY+spacing*20)
+    .setSize(sliderW, sliderH)
+    .setRange(1, 10)
+    .setValue(1)
+    ;
+  cp5.addSlider("normalOffset")
+    .setPosition(10, startY+spacing*21)
+    .setSize(sliderW, sliderH)
+    .setRange(-50, 50)
+    .setValue(0)
+    ;
+  cp5.addSlider("centerOffset")
+    .setPosition(10, startY+spacing*22)
+    .setSize(sliderW, sliderH)
+    .setRange(-50, 50)
+    .setValue(0)
+    ;
 
-  //cp5.addSlider("flashFactor")
-  //  .setPosition(10, startY+spacing*20)
-  //  .setSize(sliderW, sliderH)
-  //  .setRange(0.45, 1)
-  //  .setValue(0)
-  //  ;
-
+  cp5.addSlider("flashFactor")
+    .setPosition(10, startY+spacing*23)
+    .setSize(sliderW, sliderH)
+    .setRange(0.45, 1)
+    .setValue(0)
+    ;
+  cp5.addSlider("lerpFactor")
+    .setPosition(10, startY+spacing*24)
+    .setSize(sliderW, sliderH)
+    .setRange(0.1, 1)
+    .setValue(0.1)
+    ;
   cp5.setAutoDraw(false);
 }
 

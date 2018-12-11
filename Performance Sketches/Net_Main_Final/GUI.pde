@@ -10,8 +10,6 @@ int numOfLinesDisplay = 0;
 
 float normalOffset = 0, centerOffset = 5;
 
-
-
 float lerpFactor = 0.2;
 float flashFactor = 0.45;
 

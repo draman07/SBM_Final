@@ -6,4 +6,5 @@ void oscEvent(OscMessage msg) {
   lerpFactor = msg.get(4).floatValue();
   flashFactor = msg.get(5).floatValue();
   strokeColor = msg.get(6).intValue();
+  ended = msg.get(7).intValue();
 }

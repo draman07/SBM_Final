@@ -1,4 +1,5 @@
 import codeanticode.syphon.*;
+import processing.video.*;
 
 import org.openkinect.processing.*;
 import gab.opencv.*;
@@ -7,6 +8,9 @@ import oscP5.*;
 import netP5.*;
 
 SyphonServer server;
+Movie myMovie;
+int ended = 0; // 0 means not playing and 1 means playing
+boolean playVideo = false;
 
 PGraphics canvas;
 
@@ -45,6 +49,8 @@ void setup() {
   }
 
   server = new SyphonServer(this, "Processing Syphon");
+
+  myMovie = new Movie(this, "ending.mp4");
 }
 
 
@@ -89,10 +95,17 @@ void draw() {
   if (random(flashFactor)<0.5)canvas.image(humanImg, 0, 0);
   canvas.image(netsGraphics, 0, 0);
   if (mapping)canvas.background(255);
+  if (playVideo)canvas.image(myMovie, 0, 0);
   canvas.endDraw();
 
   image(canvas, 0, 0);
+  image(myMovie, 0, 0);
   server.sendImage(canvas);
+
+  if (ended == 1 && !playVideo) {
+    myMovie.play();
+    playVideo = true;
+  }
 
   if (guiToggle)drawGui();
 }
@@ -101,4 +114,8 @@ boolean mapping = false;
 void keyPressed() {
   if (key == ' ')guiToggle =!guiToggle;
   if (key == 'm') mapping = !mapping;
+}
+
+void movieEvent(Movie m) {
+  m.read();
 }

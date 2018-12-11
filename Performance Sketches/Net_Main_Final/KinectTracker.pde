@@ -9,6 +9,7 @@ class KinectTracker {
 
   int verticesNum = 200;
 
+  PImage defaultImg;
   PImage depthImg, blurImg;
 
 
@@ -19,6 +20,8 @@ class KinectTracker {
     depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
     blurImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
     opencv = new OpenCV(pa, depthImg);
+    defaultImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
+    defaultImg = loadImage("ren.jpg");
 
     verticesNum = num;
     contourVertices = new PVector[num];
@@ -37,15 +40,20 @@ class KinectTracker {
   void updateDepthImg() {
     rawDepth = kinect2.getRawDepth();
     depthImg.loadPixels();
+    int pixelCount = 0;
     for (int i=0; i < rawDepth.length; i++) {
       int depth = rawDepth[i];
       if (depth >= thresholdMin && depth <= thresholdMax && depth != 0) {
         depthImg.pixels[i] = color(255, 255);
+        //pixelCount++;
       } else {
         depthImg.pixels[i] = color(0, 0);
       }
     }
-    depthImg.updatePixels();
+    if(pixelCount>1000)depthImg.updatePixels();
+    //depthImg = defaultImg;
+    //println(defaultImg.width, defaultImg.height);
+    //println(depthImg.width, depthImg.height);
     //image(depthImg,512,0);
   }
 
@@ -76,7 +84,7 @@ class KinectTracker {
     }
   }
 
-  void updateContourPoints() {println(biggestContour.area());
+  void updateContourPoints() {
     if (biggestContour != null && biggestContour.area()>6000) {
       //jump sampling the contour points to the target number
       ArrayList<PVector> ori = biggestContour.getPoints();

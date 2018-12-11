@@ -19,6 +19,7 @@ class KinectTracker {
     depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
     blurImg = new PImage(kinect2.depthWidth, kinect2.depthHeight, ARGB);
     opencv = new OpenCV(pa, depthImg);
+    depthImg = loadImage("ren.jpg");
 
     verticesNum = num;
     contourVertices = new PVector[num];
@@ -28,7 +29,8 @@ class KinectTracker {
   }
 
   void update() {
-    updateDepthImg();
+    //updateDepthImg();
+    
     updateOpenCV();
     updateBiggestContour();
     updateContourPoints();
