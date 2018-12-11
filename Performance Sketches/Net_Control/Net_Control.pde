@@ -27,7 +27,7 @@ void setup() {
 
   fft = new FFT(this, bands);
   in = new AudioIn(this, 0);
-  file = new SoundFile(this, "music.mp3");
+  file = new SoundFile(this, "music.wav");
   file.amp(amp);
   // start the Audio Input
   in.start();
@@ -40,7 +40,8 @@ void draw() {
   background(0);
   textSize(50);
   text(state, width/2, height/2);
-
+  textSize(15);
+  text("P to play\nN to pause", 10, 15);
 
   processAudio();
 
@@ -55,7 +56,7 @@ void draw() {
   } else if (state == 0) {
     numOfNetsDisplay =  lerp(numOfNetsDisplay, 0, 0.1);
     numOfLinesDisplay =  lerp(numOfLinesDisplay, 4, 0.1);
-    
+
     normalOffset = lerp(normalOffset, -10, .1); 
     centerOffset = lerp(centerOffset, -10, .1); // -infinity
     lerpFactor = .3;
